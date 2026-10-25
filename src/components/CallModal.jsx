@@ -1,4 +1,4 @@
-import { FiPhone, FiVideo } from "react-icons/fi";
+import { FiPhone, FiVolume2 } from "react-icons/fi";
 import { useEffect, useRef, useState } from "react";
 
 export default function CallModal({
@@ -12,6 +12,9 @@ export default function CallModal({
   rejectCall,
   endCall,
   toggleMute,
+  audioOutput,
+  audioOutputMessage,
+  changeAudioOutput,
 }) {
   // Determine the status text shown under the peer name
   const statusText = () => {
@@ -67,22 +70,25 @@ export default function CallModal({
             <p className={callMessage ? "call-status-error" : ""}>
               {callState === "connected" ? formatDuration(duration) : statusText()}
             </p>
+            {audioOutputMessage && <p className="call-status-error" role="status">{audioOutputMessage}</p>}
 
             {showActions && (
-              <div className="call-actions">
+              <div className={`call-actions${callState === "connected" ? " call-actions-connected" : ""}`}>
                 {callState === "incoming" && (
                   <>
-                    <button type="button" onClick={acceptCall}>Accept</button>
-                    <button type="button" onClick={handleReject}>Reject</button>
+                    <button type="button" className="call-action-accept" onClick={acceptCall}>Accept</button>
+                    <button type="button" className="call-action-danger" onClick={handleReject}>Reject</button>
                   </>
                 )}
                 {callState === "calling" && (
-                  <button type="button" onClick={handleEndCall}>Cancel</button>
+                  <button type="button" className="call-action-danger" onClick={handleEndCall}>Cancel</button>
                 )}
                 {callState === "connected" && (
                   <>
-                    <button type="button" onClick={toggleMute}>{muted ? "Unmute" : "Mute"}</button>
-                    <button type="button" onClick={handleEndCall}>End</button>
+                    <button type="button" className="call-action-neutral" onClick={toggleMute}>{muted ? "Unmute" : "Mute"}</button>
+                    <button type="button" className={`call-action-output${audioOutput === "earpiece" ? " call-action-output-active" : ""}`} aria-pressed={audioOutput === "earpiece"} onClick={() => changeAudioOutput("earpiece")}><FiPhone size={16} /> Earpiece</button>
+                    <button type="button" className={`call-action-output${audioOutput === "speaker" ? " call-action-output-active" : ""}`} aria-pressed={audioOutput === "speaker"} onClick={() => changeAudioOutput("speaker")}><FiVolume2 size={16} /> Loudspeaker</button>
+                    <button type="button" className="call-action-danger" onClick={handleEndCall}>End</button>
                   </>
                 )}
               </div>

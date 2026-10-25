@@ -8,6 +8,8 @@ export default function useAudioCall(socket, myName) {
   const [callState, setCallState] = useState("idle"); // idle | calling | incoming | connected | ended
   const [peer, setPeer] = useState(null); // { id, name }
   const [muted, setMuted] = useState(false);
+  const [audioOutput, setAudioOutput] = useState("speaker");
+  const [audioOutputMessage, setAudioOutputMessage] = useState("");
   const [callMessage, setCallMessage] = useState(""); // inline message shown on ended card
   const [callId, setCallId] = useState(null); // call record id for history
 
@@ -119,13 +121,22 @@ export default function useAudioCall(socket, myName) {
       localStreamRef.current.getTracks().forEach((t) => t.stop());
       localStreamRef.current = null;
     }
-    if (remoteAudioRef.current) remoteAudioRef.current.srcObject = null;
+    if (remoteAudioRef.current) {
+      remoteAudioRef.current.srcObject = null;
+      if (typeof remoteAudioRef.current.setSinkId === "function") {
+        remoteAudioRef.current.setSinkId("default").catch((error) => {
+          console.warn("Could not reset call audio output:", error);
+        });
+      }
+    }
     stopRingtone();
     pendingOfferRef.current = null;
     pendingCandidatesRef.current = [];
     peerIdRef.current = null;
     setPeer(null);
     setMuted(false);
+    setAudioOutput("speaker");
+    setAudioOutputMessage("");
     setCallMessage(message);
     setCallId(null);
     updateState(message ? "ended" : "idle");
@@ -140,7 +151,10 @@ export default function useAudioCall(socket, myName) {
       };
 
       pc.ontrack = (e) => {
-        if (remoteAudioRef.current) remoteAudioRef.current.srcObject = e.streams[0];
+        if (remoteAudioRef.current) {
+          remoteAudioRef.current.srcObject = e.streams[0];
+          remoteAudioRef.current.play().catch(() => {});
+        }
       };
 
       pc.onconnectionstatechange = () => {
@@ -154,7 +168,18 @@ export default function useAudioCall(socket, myName) {
   );
 
   const getMicStream = async () => {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+    const stream = await navigator.mediaDevices.getUserMedia({
+      audio: {
+        echoCancellation: { ideal: true },
+        noiseSuppression: { ideal: true },
+        autoGainControl: { ideal: true },
+        channelCount: { ideal: 1 },
+      },
+      video: false,
+    });
+    stream.getAudioTracks().forEach((track) => {
+      track.contentHint = "speech";
+    });
     localStreamRef.current = stream;
     return stream;
   };
@@ -198,6 +223,7 @@ export default function useAudioCall(socket, myName) {
     const incoming = pendingOfferRef.current;
     if (!incoming) return;
     try {
+      stopRingtone();
       const stream = await getMicStream();
       const pc = createPeerConnection(incoming.from);
       stream.getTracks().forEach((t) => pc.addTrack(t, stream));
@@ -234,6 +260,35 @@ export default function useAudioCall(socket, myName) {
     setMuted(!track.enabled);
   };
 
+  const changeAudioOutput = async (mode) => {
+    const audio = remoteAudioRef.current;
+    if (!audio || typeof audio.setSinkId !== "function") {
+      setAudioOutputMessage("Audio output switching is not supported by this browser.");
+      return;
+    }
+
+    try {
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      const outputs = devices.filter((device) => device.kind === "audiooutput");
+      const target = mode === "earpiece"
+        ? outputs.find((device) => /earpiece|receiver|handset|phone/i.test(device.label))
+        : outputs.find((device) => /speaker|loudspeaker/i.test(device.label)) ||
+          outputs.find((device) => device.deviceId === "default");
+
+      if (!target && mode === "earpiece") {
+        setAudioOutputMessage("Earpiece output is not available on this device/browser.");
+        return;
+      }
+
+      await audio.setSinkId(target?.deviceId || "default");
+      setAudioOutput(mode);
+      setAudioOutputMessage("");
+    } catch (error) {
+      console.error("Audio output change failed:", error);
+      setAudioOutputMessage("Could not change audio output on this device.");
+    }
+  };
+
   // ---------- Socket listeners ----------
   useEffect(() => {
     if (!socket) return;
@@ -253,6 +308,7 @@ export default function useAudioCall(socket, myName) {
 
     const onAccepted = async ({ answer }) => {
       if (!pcRef.current) return;
+      stopRingtone();
       await pcRef.current.setRemoteDescription(answer);
       await flushCandidates();
       updateState("connected");
@@ -309,6 +365,7 @@ export default function useAudioCall(socket, myName) {
 
   return {
     callState, peer, muted, remoteAudioRef, callId, callMessage,
+    audioOutput, audioOutputMessage, changeAudioOutput,
     startCall, acceptCall, rejectCall, endCall, toggleMute,
   };
 }

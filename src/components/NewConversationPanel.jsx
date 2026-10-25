@@ -139,9 +139,9 @@ export default function NewConversationPanel({ isOpen, onClose, onStart }) {
   };
 
   return (
-    <div className="fixed inset-0 z-40 grid place-items-center p-4" role="dialog" aria-modal="true" aria-labelledby="new-chat-title">
+    <div className="new-conversation-overlay fixed inset-0 z-40 grid place-items-center p-4" role="dialog" aria-modal="true" aria-labelledby="new-chat-title">
       <button type="button" aria-label={t("newChat")} onClick={onClose} className="absolute inset-0 cursor-default bg-slate-950/35 backdrop-blur-sm" />
-      <section className="glass relative flex h-[min(34rem,calc(100dvh-2rem))] w-full max-w-md flex-col rounded-[1.75rem] p-6 shadow-2xl">
+      <section className="new-conversation-panel glass relative flex h-[min(34rem,calc(100dvh-2rem))] w-full max-w-md flex-col rounded-[1.75rem] p-6 shadow-2xl">
         <div className="mb-5 flex items-start justify-between gap-4">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.14em] text-violet-500">{t("newConversation")}</p>

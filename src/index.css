@@ -307,21 +307,62 @@ input {
 
 .call-actions button:hover { transform: translateY(-2px); }
 
-.call-actions button:first-child {
+.call-actions-connected button { flex-basis: calc(50% - 0.375rem); }
+
+.call-actions .call-action-accept {
   background: linear-gradient(135deg, #10b981, #059669);
   color: white;
   box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35);
 }
 
-.call-actions button:last-child {
+.call-actions .call-action-danger {
   background: linear-gradient(135deg, #ef4444, #dc2626);
   color: white;
   box-shadow: 0 8px 20px rgba(239, 68, 68, 0.35);
 }
 
+.call-actions .call-action-neutral {
+  border: 1px solid var(--app-border);
+  color: var(--app-text);
+  background: var(--app-soft);
+}
+
+.call-actions .call-action-output {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  border: 1px solid var(--app-border);
+  color: var(--app-text);
+  background: var(--app-soft);
+}
+
+.call-actions .call-action-output-active {
+  border-color: rgba(139, 92, 246, 0.55);
+  color: white;
+  background: linear-gradient(135deg, #8b5cf6, #d946ef);
+}
+
 /* Keep popovers and the call interface usable on narrow phones. */
 .EmojiPickerReact {
   max-width: calc(100vw - 1.5rem) !important;
+}
+
+@media (max-width: 640px) {
+  .new-conversation-overlay {
+    place-items: stretch;
+    padding: 0;
+  }
+
+  .new-conversation-panel {
+    width: 100%;
+    max-width: none;
+    height: 100vh;
+    height: 100dvh;
+    min-height: 100dvh;
+    border-radius: 0;
+    padding: max(1.25rem, env(safe-area-inset-top)) 1rem max(1rem, env(safe-area-inset-bottom));
+  }
 }
 
 @media (max-width: 420px) {
