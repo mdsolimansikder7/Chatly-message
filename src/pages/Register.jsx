@@ -34,9 +34,9 @@ export default function Register() {
   };
 
   return (
-    <div className="bg-aurora relative flex min-h-screen items-center justify-center p-4">
-      <div className="absolute right-5 top-5 z-10 flex gap-2"><LanguageSwitcher /><ThemeToggle /></div>
-      <form onSubmit={handleSubmit} className="glass relative z-10 w-full max-w-md rounded-[2rem] p-8 sm:p-10">
+    <div className="auth-page bg-aurora relative flex min-h-screen items-center justify-center p-4">
+      <div className="auth-controls absolute right-5 top-5 z-10 flex gap-2"><LanguageSwitcher /><ThemeToggle /></div>
+      <form onSubmit={handleSubmit} className="auth-form glass relative z-10 w-full max-w-md rounded-[2rem] p-8 sm:p-10">
         <div className="mb-7 text-center">
           <span className="brand-ring mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-violet-500 to-pink-500 text-xl font-bold text-white">C</span>
           <h1 className="mt-5 bg-gradient-to-r from-violet-500 to-pink-500 bg-clip-text text-4xl font-bold tracking-tight text-transparent">Chatly</h1>

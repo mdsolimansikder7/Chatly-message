@@ -44,6 +44,12 @@ body,
   margin: 0;
 }
 
+html,
+body {
+  width: 100%;
+  overflow-x: hidden;
+}
+
 body {
   background: var(--app-bg);
   color: var(--app-text);
@@ -349,6 +355,81 @@ input {
 }
 
 @media (max-width: 640px) {
+  .auth-page {
+    min-height: 100vh;
+    min-height: 100dvh;
+    align-items: flex-start;
+    padding-top: max(5.25rem, calc(env(safe-area-inset-top) + 4rem));
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+
+  .auth-controls {
+    top: max(1rem, env(safe-area-inset-top));
+    right: max(1rem, env(safe-area-inset-right));
+  }
+
+  .auth-form {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .requests-overlay {
+    place-items: stretch;
+    padding: 0;
+  }
+
+  .requests-panel {
+    width: 100%;
+    max-width: none;
+    height: 100vh;
+    height: 100dvh;
+    min-height: 100dvh;
+    max-height: 100dvh;
+    gap: 0;
+    border-radius: 0;
+    padding: max(1.25rem, env(safe-area-inset-top)) 1rem max(1rem, env(safe-area-inset-bottom));
+  }
+
+  .requests-list {
+    max-height: none;
+    overscroll-behavior: contain;
+  }
+
+  .request-card-incoming {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.65rem;
+    padding: 0.75rem;
+  }
+
+  .request-identity {
+    width: 100%;
+  }
+
+  .request-actions {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
+
+  .request-actions button {
+    min-width: 0;
+    min-height: 2.75rem;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.6rem 0.45rem;
+    font-size: 0.75rem;
+  }
+
+  .request-status {
+    padding-inline: 0.25rem;
+    font-size: 0.7rem;
+  }
+
+  .requests-hint {
+    margin-top: 0.75rem;
+  }
+
   .new-conversation-overlay {
     place-items: stretch;
     padding: 0;
@@ -356,17 +437,123 @@ input {
 
   .new-conversation-panel {
     width: 100%;
-    max-width: none;
+    min-width: 0;
+    max-width: 100vw;
     height: 100vh;
     height: 100dvh;
     min-height: 100dvh;
     border-radius: 0;
     padding: max(1.25rem, env(safe-area-inset-top)) 1rem max(1rem, env(safe-area-inset-bottom));
   }
+
+  .new-conversation-user {
+    gap: 0.6rem;
+    padding: 0.65rem;
+  }
+
+  .new-conversation-action {
+    gap: 0.35rem;
+    padding: 0.6rem 0.65rem;
+    font-size: 0.7rem;
+  }
+
+  .call-overlay {
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: max(0.875rem, env(safe-area-inset-top)) 0.875rem max(0.875rem, env(safe-area-inset-bottom));
+  }
+
+  .call-card {
+    max-height: 100%;
+    overflow-y: auto;
+  }
+
+  .call-actions-connected {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .call-actions-connected button {
+    min-width: 0;
+    flex: none;
+    min-height: 2.75rem;
+  }
+
+  .settings-panel-header {
+    padding: max(1rem, env(safe-area-inset-top)) 1rem 1rem;
+  }
+
+  .settings-panel-form {
+    padding: 1.25rem 1rem;
+  }
+
+  .settings-panel-footer {
+    padding: 0.85rem 1rem max(0.85rem, env(safe-area-inset-bottom));
+  }
+
+  .message-input-area {
+    padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+  }
+
+  .dialog-overlay {
+    align-items: end;
+    padding: 0;
+  }
+
+  .dialog-panel {
+    width: 100%;
+    max-width: none;
+    max-height: min(88dvh, 44rem);
+    overflow-y: auto;
+    border-radius: 1.5rem 1.5rem 0 0;
+    padding: 1.25rem 1rem max(1.25rem, env(safe-area-inset-bottom));
+  }
+
+  .profile-dialog-overlay {
+    padding: 1rem;
+    align-items: center;
+  }
+
+  .profile-dialog-panel {
+    width: 100%;
+    max-width: 24rem;
+    max-height: calc(100dvh - 2rem);
+    overflow-y: auto;
+    padding: 1.25rem;
+  }
+
+  .dialog-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .dialog-actions button {
+    min-width: 0;
+    padding-inline: 0.65rem;
+  }
+
+  .EmojiPickerReact {
+    width: min(320px, calc(100vw - 2rem)) !important;
+  }
+
+  .message-bubble-group {
+    max-width: min(88%, 36rem);
+    overflow-wrap: anywhere;
+  }
+
+  .chat-error-toast {
+    bottom: max(1rem, env(safe-area-inset-bottom));
+    width: calc(100% - 2rem);
+    max-width: 30rem;
+    text-align: center;
+  }
 }
 
 @media (max-width: 420px) {
-  .call-overlay { padding: 0.875rem; }
+  .requests-panel {
+    padding-right: 0.75rem;
+    padding-left: 0.75rem;
+  }
 
   .call-card {
     gap: 1rem;
@@ -380,11 +567,82 @@ input {
     font-size: 1.75rem;
   }
 
-  .call-actions { gap: 0.5rem; }
+  .call-actions { gap: 0.45rem; }
 
   .call-actions button {
     min-height: 2.75rem;
     padding: 0.65rem 0.4rem;
+    font-size: 0.78rem;
+  }
+
+  .chat-header {
+    gap: 0.35rem;
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+  }
+
+  .chat-header-actions {
+    gap: 0.25rem;
+  }
+
+  .chat-header-actions .theme-icon-button {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  .chat-header-avatar {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  .chat-header-avatar > .relative,
+  .chat-header-avatar > .relative > div:first-child {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  .message-composer {
+    gap: 0.15rem;
+    padding: 0.3rem;
+  }
+
+  .message-composer > button {
+    padding: 0.5rem;
+  }
+
+  .message-composer > button svg {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+
+  .message-composer-input {
+    min-width: 0;
+    padding-inline: 0.25rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .sidebar-header {
+    gap: 0.4rem;
+  }
+
+  .sidebar-header-actions {
+    gap: 0.2rem;
+  }
+
+  .sidebar-header-actions > button,
+  .sidebar-header-actions > .theme-icon-button {
+    width: 2.15rem;
+    height: 2.15rem;
+  }
+
+  .sidebar-header .language-switcher-compact .language-option {
+    min-width: 1.65rem;
+    padding-inline: 0.22rem;
+  }
+
+  .request-actions button {
+    font-size: 0.7rem;
   }
 }
 

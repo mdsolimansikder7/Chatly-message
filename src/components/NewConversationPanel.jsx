@@ -141,18 +141,18 @@ export default function NewConversationPanel({ isOpen, onClose, onStart }) {
   return (
     <div className="new-conversation-overlay fixed inset-0 z-40 grid place-items-center p-4" role="dialog" aria-modal="true" aria-labelledby="new-chat-title">
       <button type="button" aria-label={t("newChat")} onClick={onClose} className="absolute inset-0 cursor-default bg-slate-950/35 backdrop-blur-sm" />
-      <section className="new-conversation-panel glass relative flex h-[min(34rem,calc(100dvh-2rem))] w-full max-w-md flex-col rounded-[1.75rem] p-6 shadow-2xl">
-        <div className="mb-5 flex items-start justify-between gap-4">
-          <div>
+      <section className="new-conversation-panel glass relative flex h-[min(34rem,calc(100dvh-2rem))] w-full min-w-0 max-w-md flex-col overflow-x-hidden rounded-[1.75rem] p-6 shadow-2xl">
+        <div className="mb-5 flex min-w-0 items-start justify-between gap-3">
+          <div className="min-w-0 flex-1">
             <p className="text-xs font-bold uppercase tracking-[0.14em] text-violet-500">{t("newConversation")}</p>
-            <h2 id="new-chat-title" className="theme-text mt-1 text-xl font-bold">{t("findContact")}</h2>
+            <h2 id="new-chat-title" className="theme-text mt-1 text-xl font-bold leading-tight">{t("findContact")}</h2>
           </div>
-          <button type="button" aria-label={t("newChat")} onClick={onClose} className="theme-icon-button grid h-10 w-10 place-items-center"><FiX size={19} /></button>
+          <button type="button" aria-label={t("newChat")} onClick={onClose} className="theme-icon-button grid h-10 w-10 shrink-0 place-items-center"><FiX size={19} /></button>
         </div>
 
-        <label className="theme-field theme-focus flex items-center gap-3 rounded-2xl px-4 py-3">
-          <FiSearch className="theme-muted" />
-          <input autoFocus value={query} onChange={(event) => setQuery(event.target.value)} placeholder={t("searchContact")} className="theme-text w-full bg-transparent text-sm outline-none placeholder:text-gray-400" />
+        <label className="theme-field theme-focus flex w-full min-w-0 items-center gap-3 rounded-2xl px-4 py-3">
+          <FiSearch className="theme-muted shrink-0" />
+          <input autoFocus value={query} onChange={(event) => setQuery(event.target.value)} placeholder={t("searchContact")} className="theme-text min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-gray-400" />
           {loading && <FiLoader className="animate-spin text-violet-500" />}
         </label>
 
@@ -170,11 +170,11 @@ export default function NewConversationPanel({ isOpen, onClose, onStart }) {
                 type="button"
                 onClick={action || undefined}
                 disabled={!action}
-                className={`theme-soft flex w-full items-center gap-3 rounded-2xl p-3 text-left ${action ? "cursor-pointer" : "cursor-default"}`}
+                className={`new-conversation-user theme-soft flex w-full min-w-0 items-center gap-3 rounded-2xl p-3 text-left ${action ? "cursor-pointer" : "cursor-default"}`}
               >
-                <Avatar name={user.name} image={user.avatar} online={user.isOnline} size="h-11 w-11" />
+                <span className="shrink-0"><Avatar name={user.name} image={user.avatar} online={user.isOnline} size="h-11 w-11" /></span>
                 <div className="min-w-0 flex-1"><p className="theme-text truncate text-sm font-bold">{user.name}</p><p className="theme-muted truncate text-xs">{user.username ? `@${user.username} · ${user.email}` : user.email}</p></div>
-                <span className={`flex items-center gap-1.5 whitespace-nowrap rounded-xl px-3 py-2 text-xs font-bold ${view.className}`}>
+                <span className={`new-conversation-action flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-xl px-3 py-2 text-xs font-bold ${view.className}`}>
                   {view.icon}
                   {view.label}
                 </span>

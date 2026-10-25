@@ -68,7 +68,7 @@ export default function SettingsPanel({ isOpen, onClose, profile = emptyProfile,
     <div className="fixed inset-0 z-50 flex justify-end" role="dialog" aria-modal="true" aria-labelledby="settings-title">
       <button type="button" aria-label={t("closeSettings")} className="absolute inset-0 cursor-default bg-slate-950/35 backdrop-blur-sm" onClick={onClose} />
       <section className="glass relative flex h-full w-full max-w-xl flex-col border-l shadow-2xl">
-        <header className="theme-divider flex items-center justify-between border-b px-6 py-5 sm:px-8">
+        <header className="settings-panel-header theme-divider flex items-center justify-between border-b px-6 py-5 sm:px-8">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.15em] text-violet-500">{t("personalSpace")}</p>
             <h2 id="settings-title" className="theme-text mt-1 text-xl font-bold">{t("settings")}</h2>
@@ -76,7 +76,7 @@ export default function SettingsPanel({ isOpen, onClose, profile = emptyProfile,
           <button type="button" onClick={onClose} aria-label={t("closeSettings")} className="theme-icon-button grid h-10 w-10 place-items-center"><FiX size={20} /></button>
         </header>
 
-        <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto px-6 py-7 sm:px-8">
+        <form onSubmit={handleSubmit} className="settings-panel-form min-h-0 flex-1 overflow-y-auto px-6 py-7 sm:px-8">
           <div className="mb-8 flex items-center gap-4 rounded-3xl bg-gradient-to-br from-violet-500/15 to-pink-500/10 p-4">
             <div className="relative">
               <Avatar name={draft.name || emptyProfile.name} image={draft.avatar} size="h-16 w-16" />
@@ -152,7 +152,7 @@ export default function SettingsPanel({ isOpen, onClose, profile = emptyProfile,
           </div>
         </form>
 
-        <footer className="theme-divider flex items-center justify-between border-t px-6 py-4 sm:px-8">
+        <footer className="settings-panel-footer theme-divider flex items-center justify-between gap-3 border-t px-6 py-4 sm:px-8">
           <p className="theme-muted max-w-[12rem] text-xs">{t("saveAccount")}</p>
           <button type="button" disabled={saving} onClick={handleSubmit} className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-violet-500 to-pink-500 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-violet-500/25 transition hover:scale-[1.02] active:scale-95 disabled:cursor-wait disabled:opacity-70"><FiCheck /> {saving ? t("saving") : t("saveChanges")}</button>
         </footer>

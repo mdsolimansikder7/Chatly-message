@@ -12,7 +12,7 @@ export default function Sidebar({ chats, activeId, onSelect, profile, onOpenSett
 
   return (
     <aside className="glass flex h-full w-full flex-col rounded-none p-3 sm:rounded-3xl sm:p-4 md:w-80 lg:w-96">
-      <div className="mb-4 flex items-center justify-between gap-2 sm:mb-6">
+      <div className="sidebar-header mb-4 flex items-center justify-between gap-2 sm:mb-6">
         <div>
           <div className="flex items-center gap-2">
             <span className="brand-ring grid h-8 w-8 place-items-center rounded-xl bg-gradient-to-br from-violet-500 to-pink-500 text-white"><FiMessageCircle size={17} /></span>
@@ -20,7 +20,7 @@ export default function Sidebar({ chats, activeId, onSelect, profile, onOpenSett
           </div>
           <p className="mt-2 text-xs font-medium theme-muted">{t("brandTagline")}</p>
         </div>
-        <div className="flex shrink-0 items-center gap-1 sm:gap-2">
+        <div className="sidebar-header-actions flex shrink-0 items-center gap-1 sm:gap-2">
           <LanguageSwitcher compact />
           <div className="hidden min-[421px]:block"><ThemeToggle compact /></div>
           <button type="button" onClick={onOpenRequests} aria-label={t("friendRequests")} className="theme-icon-button relative grid h-10 w-10 place-items-center">

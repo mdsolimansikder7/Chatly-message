@@ -167,9 +167,9 @@ export function ConfirmActionModal({ isOpen, titleKey, hintKey, confirmLabelKey,
 
 function DialogFrame({ children, onClose, danger = false }) {
   return (
-    <div className="fixed inset-0 z-50 grid place-items-center p-4" role="dialog" aria-modal="true">
+    <div className="dialog-overlay fixed inset-0 z-50 grid place-items-center p-4" role="dialog" aria-modal="true">
       <button type="button" className="absolute inset-0 cursor-default bg-slate-950/40 backdrop-blur-sm" onClick={onClose} aria-label="close" />
-      <section className={`glass relative w-full max-w-sm rounded-[1.75rem] p-6 shadow-2xl ${danger ? "ring-1 ring-rose-400/30" : ""}`}>
+      <section className={`dialog-panel glass relative w-full max-w-sm rounded-[1.75rem] p-6 shadow-2xl ${danger ? "ring-1 ring-rose-400/30" : ""}`}>
         <button type="button" onClick={onClose} aria-label="close" className="theme-icon-button absolute right-5 top-5 grid h-9 w-9 place-items-center"><FiX size={17} /></button>
         {children}
       </section>
@@ -180,7 +180,7 @@ function DialogFrame({ children, onClose, danger = false }) {
 function DialogActions({ onClose, onConfirm, confirmLabel, confirmDanger = false, confirmDisabled = false }) {
   const { t } = useLanguage();
   return (
-    <div className="mt-5 flex justify-end gap-2.5">
+    <div className="dialog-actions mt-5 flex justify-end gap-2.5">
       <button type="button" onClick={onClose} className="theme-soft theme-muted rounded-xl px-4 py-2.5 text-sm font-bold transition hover:theme-text">{t("closePanel")}</button>
       <button
         type="button"

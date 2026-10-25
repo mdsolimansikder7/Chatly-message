@@ -58,10 +58,10 @@ export default function RequestsPanel({ isOpen, onClose, onChanged }) {
   };
 
   return (
-    <div className="fixed inset-0 z-40 grid place-items-center p-4" role="dialog" aria-modal="true" aria-labelledby="requests-title">
+    <div className="requests-overlay fixed inset-0 z-40 grid place-items-center p-4" role="dialog" aria-modal="true" aria-labelledby="requests-title">
       <button type="button" aria-label={t("closePanel")} onClick={onClose} className="absolute inset-0 cursor-default bg-slate-950/35 backdrop-blur-sm" />
-      <section className="glass relative w-full max-w-md rounded-[1.75rem] p-6 shadow-2xl">
-        <div className="mb-5 flex items-start justify-between gap-4">
+      <section className="requests-panel glass relative flex w-full max-w-md flex-col overflow-hidden rounded-[1.75rem] p-6 shadow-2xl">
+        <div className="mb-5 flex shrink-0 items-start justify-between gap-4">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.14em] text-violet-500">{t("friendRequests")}</p>
             <h2 id="requests-title" className="theme-text mt-1 text-xl font-bold">{t("incomingLabel")}</h2>
@@ -69,7 +69,7 @@ export default function RequestsPanel({ isOpen, onClose, onChanged }) {
           <button type="button" aria-label={t("closePanel")} onClick={onClose} className="theme-icon-button grid h-10 w-10 place-items-center"><FiX size={19} /></button>
         </div>
 
-        <div className="max-h-80 space-y-1 overflow-y-auto">
+        <div className="requests-list max-h-80 min-h-0 flex-1 space-y-1 overflow-y-auto">
           {error && <p className="rounded-xl bg-rose-500/10 px-3 py-2 text-sm text-rose-500">{error}</p>}
           {loading && (
             <p className="theme-muted flex flex-col items-center gap-2 px-3 py-9 text-center text-sm">
@@ -82,13 +82,15 @@ export default function RequestsPanel({ isOpen, onClose, onChanged }) {
           )}
 
           {!loading && incoming.map((request) => (
-            <div key={request._id} className="theme-soft flex items-center gap-3 rounded-2xl p-3">
-              <Avatar name={request.user.name} image={request.user.avatar} online={request.user.isOnline} size="h-11 w-11" />
-              <div className="min-w-0 flex-1">
-                <p className="theme-text truncate text-sm font-bold">{request.user.name}</p>
-                <p className="theme-muted truncate text-xs">{request.user.email}</p>
+            <div key={request._id} className="request-card request-card-incoming theme-soft flex min-w-0 items-center gap-3 rounded-2xl p-3">
+              <div className="request-identity flex min-w-0 flex-1 items-center gap-3">
+                <span className="shrink-0"><Avatar name={request.user.name} image={request.user.avatar} online={request.user.isOnline} size="h-11 w-11" /></span>
+                <div className="min-w-0 flex-1">
+                  <p className="theme-text truncate text-sm font-bold">{request.user.name}</p>
+                  <p className="theme-muted truncate text-xs">{request.user.email}</p>
+                </div>
               </div>
-              <div className="flex shrink-0 items-center gap-2">
+              <div className="request-actions flex shrink-0 items-center gap-2">
                 <button
                   type="button"
                   disabled={Boolean(busyId)}
@@ -115,13 +117,13 @@ export default function RequestsPanel({ isOpen, onClose, onChanged }) {
             <div className="pt-3">
               <p className="theme-muted mb-2 px-3 text-xs font-bold uppercase tracking-[0.14em]">{t("sentLabel")}</p>
               {outgoing.map((request) => (
-                <div key={request._id} className="theme-soft mb-1 flex items-center gap-3 rounded-2xl p-3">
-                  <Avatar name={request.user.name} image={request.user.avatar} size="h-11 w-11" />
+                <div key={request._id} className="request-card theme-soft mb-1 flex min-w-0 items-center gap-3 rounded-2xl p-3">
+                  <span className="shrink-0"><Avatar name={request.user.name} image={request.user.avatar} size="h-11 w-11" /></span>
                   <div className="min-w-0 flex-1">
                     <p className="theme-text truncate text-sm font-bold">{request.user.name}</p>
                     <p className="theme-muted truncate text-xs">{request.user.email}</p>
                   </div>
-                  <span className="theme-muted flex shrink-0 items-center gap-1.5 rounded-xl px-3 py-2 text-xs font-bold">
+                  <span className="theme-muted request-status flex shrink-0 items-center gap-1.5 rounded-xl px-3 py-2 text-xs font-bold">
                     <FiClock size={13} /> {t("requestSent")}
                   </span>
                 </div>
@@ -130,7 +132,7 @@ export default function RequestsPanel({ isOpen, onClose, onChanged }) {
           )}
         </div>
 
-        <p className="theme-muted mt-4 flex items-start gap-2 rounded-xl bg-[var(--app-soft)] px-3 py-2.5 text-xs">
+        <p className="requests-hint theme-muted mt-4 flex shrink-0 items-start gap-2 rounded-xl bg-[var(--app-soft)] px-3 py-2.5 text-xs">
           <FiInfo size={14} className="mt-0.5 shrink-0" />
           {t("requestHint")}
         </p>

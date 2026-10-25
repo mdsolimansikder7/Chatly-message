@@ -50,12 +50,12 @@ export default function ChatHeader({
 
   return (
     <div>
-      <header className="theme-divider flex items-center justify-between gap-2 border-b px-3 py-3 sm:px-5 sm:py-4">
+      <header className="chat-header theme-divider flex items-center justify-between gap-2 border-b px-3 py-3 sm:px-5 sm:py-4">
         <div className="flex min-w-0 items-center gap-3">
           <button type="button" onClick={onBack} aria-label={t("backToChats")} className="theme-icon-button grid h-10 w-10 place-items-center md:hidden">
             <FiArrowLeft size={20} />
           </button>
-          <Avatar name={displayName} image={chat.avatar} online={chat.online} size="h-11 w-11" />
+          <span className="chat-header-avatar shrink-0"><Avatar name={displayName} image={chat.avatar} online={chat.online} size="h-11 w-11" /></span>
           <div className="min-w-0">
             <p className="theme-text flex items-center gap-2 truncate font-semibold leading-tight">
               {displayName}
@@ -67,7 +67,7 @@ export default function ChatHeader({
             </p>
           </div>
         </div>
-        <div className="flex shrink-0 gap-1 sm:gap-2">
+        <div className="chat-header-actions flex shrink-0 gap-1 sm:gap-2">
           <div className="hidden min-[421px]:block md:hidden"><LanguageSwitcher compact /></div>
           <div className="hidden min-[421px]:block md:hidden"><ThemeToggle compact /></div>
           {disappearLabel && (

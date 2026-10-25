@@ -559,7 +559,7 @@ export default function RealTimeChat() {
           )}
         </main>
       </div>
-      {error && <button type="button" onClick={() => setError("")} className="fixed bottom-5 left-1/2 z-30 -translate-x-1/2 rounded-xl border border-rose-500/20 bg-rose-500/12 px-4 py-3 text-sm text-rose-500 shadow-lg backdrop-blur">{error}</button>}
+      {error && <button type="button" onClick={() => setError("")} className="chat-error-toast fixed bottom-5 left-1/2 z-30 -translate-x-1/2 rounded-xl border border-rose-500/20 bg-rose-500/12 px-4 py-3 text-sm text-rose-500 shadow-lg backdrop-blur">{error}</button>}
       {notice && <button type="button" onClick={() => setNotice("")} className="fixed bottom-5 left-1/2 z-30 -translate-x-1/2 translate-y-14 rounded-xl border border-emerald-500/20 bg-emerald-500/12 px-4 py-3 text-sm font-semibold text-emerald-500 shadow-lg backdrop-blur">{notice}</button>}
       <NewConversationPanel isOpen={newConversationOpen} onClose={() => setNewConversationOpen(false)} onStart={handleStartConversation} />
       <RequestsPanel isOpen={requestsOpen} onClose={() => setRequestsOpen(false)} onChanged={handleFriendRequestChanged} />

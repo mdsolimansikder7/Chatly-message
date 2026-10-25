@@ -142,8 +142,8 @@ export default function MessageInput({ onSend, onTyping }) {
   };
 
   return (
-    <div className="relative p-2 sm:p-4">
-      <div className="glass theme-focus flex items-center gap-1 rounded-full px-2 py-1.5 transition-shadow focus-within:shadow-[0_0_0_3px_rgba(139,92,246,0.16)] sm:gap-2 sm:px-3 sm:py-2">
+    <div className="message-input-area relative p-2 sm:p-4">
+      <div className="message-composer glass theme-focus flex min-w-0 items-center gap-1 rounded-full px-2 py-1.5 transition-shadow focus-within:shadow-[0_0_0_3px_rgba(139,92,246,0.16)] sm:gap-2 sm:px-3 sm:py-2">
         {recording ? (
           <>
             <div className="flex min-w-0 flex-1 items-center gap-2 px-2 text-sm font-semibold text-rose-500">
@@ -219,7 +219,7 @@ export default function MessageInput({ onSend, onTyping }) {
           disabled={uploading}
           placeholder={uploading ? "Uploading..." : t("messagePlaceholder")}
           aria-label={t("messagePlaceholder")}
-          className="theme-text flex-1 bg-transparent px-2 py-2 outline-none placeholder:text-gray-400"
+          className="message-composer-input theme-text flex-1 bg-transparent px-2 py-2 outline-none placeholder:text-gray-400"
         />
 
         <button

@@ -11,9 +11,9 @@ export default function ContactProfileModal({ isOpen, contact, chatOnline, onClo
     : { label: contact.lastSeen ? t("lastSeenAt", { time: new Date(contact.lastSeen).toLocaleString() }) : t("statusOffline"), tone: "theme-muted" };
 
   return (
-    <div className="fixed inset-0 z-50 grid place-items-center p-4" role="dialog" aria-modal="true">
+    <div className="profile-dialog-overlay fixed inset-0 z-50 grid place-items-center p-4" role="dialog" aria-modal="true">
       <button type="button" className="absolute inset-0 cursor-default bg-slate-950/40 backdrop-blur-sm" onClick={onClose} aria-label={t("closePanel")} />
-      <section className="glass relative w-full max-w-sm rounded-[1.75rem] p-6 shadow-2xl">
+      <section className="profile-dialog-panel glass relative w-full max-w-sm rounded-[1.75rem] p-6 shadow-2xl">
         <button type="button" onClick={onClose} aria-label={t("closePanel")} className="theme-icon-button absolute right-5 top-5 grid h-9 w-9 place-items-center"><FiX size={17} /></button>
         <div className="flex flex-col items-center text-center">
           <Avatar name={contact.name} image={contact.avatar} online={contact.isOnline || chatOnline} size="h-20 w-20" />
